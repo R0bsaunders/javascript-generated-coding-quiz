@@ -6,6 +6,7 @@ const introDiv = document.querySelector("#start-screen");
 const questionDiv = document.querySelector("#questions");
 const questionTitle = document.querySelector("#question-title");
 const choicesDiv = document.querySelector("#choices");
+const feedbackDiv = document.querySelector("#feedback");
 
 // Declare constants
 
@@ -16,6 +17,9 @@ const timePenalty = 5;
 
 var timeLeft = timeLeftOption; // Allows time to be reset to game specified number
 var activeQuestion = [];
+var feedbackText = document.createElement('p');
+feedbackText.setAttribute("class", "feedback")
+
 
 // Add event listener for Start button
 
@@ -94,21 +98,32 @@ function printQuestion() {
 };
 
 // Event listener for correct or incorrect answer
-
-
 document.querySelector(".choices").addEventListener("click", function(event) {
-
   
   var element = event.target;
 
-  // Check if the clicked element was an wrong
+  // Get data-attribute of a button
   if (element.matches("button")) {
+
+    // Variable to store the data-set value
     var state = element.getAttribute("data-set");
+
+    // Check data-set state for wrong or correct
     if(state === "wrong") {
+
+      document.body.children[2].children[1].children[2].appendChild(feedbackText)
+      feedbackText.textContent = "Wrong!"
       console.log("Wrong answer");
+      randomQuestion();
+      printQuestion();
 
     } else {
-    console.log("Correct answer");
+      feedbackText.setAttribute("class", "feedback")
+      document.body.children[2].children[1].children[2].appendChild(feedbackText)
+      feedbackText.textContent = "Correct!"
+      console.log("Correct answer");
+      randomQuestion();
+      printQuestion();
     };
   };
 });
