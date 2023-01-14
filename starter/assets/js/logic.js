@@ -10,6 +10,7 @@ const choicesDiv = document.querySelector("#choices");
 // Declare constants
 
 const timeLeftOption = 5;
+const timePenalty = 5;
 
 // Declare variables
 
@@ -78,16 +79,36 @@ function printQuestion() {
   // Print answer choices. i must start with array '1' where the choices begin
   for (var i = 1; i < activeQuestion.length; i++) {
     // Add a button per answer
-    var button = document.createElement('button');
-    button.setAttribute("data-set", "wrong-answer")
-    document.body.children[2].children[1].children[1].appendChild(button);
-    button.textContent = activeQuestion[i][1];
+    choiceButton = document.createElement('button');
+    choiceButton.setAttribute("data-set", "wrong")
+    document.body.children[2].children[1].children[1].appendChild(choiceButton);
+    choiceButton.textContent = activeQuestion[i][1];
 
     // Set a dataset to identify the correct answer. Array 4 is always the correct answer
     if(i == 4){
-      button.setAttribute("data-set", "correct-answer")
+      choiceButton.setAttribute("data-set", "correct")
 
     };
   };
 
 };
+
+// Event listener for correct or incorrect answer
+
+
+document.querySelector(".choices").addEventListener("click", function(event) {
+
+  
+  var element = event.target;
+
+  // Check if the clicked element was an wrong
+  if (element.matches("button")) {
+    var state = element.getAttribute("data-set");
+    if(state === "wrong") {
+      console.log("Wrong answer");
+
+    } else {
+    console.log("Correct answer");
+    };
+  };
+});
