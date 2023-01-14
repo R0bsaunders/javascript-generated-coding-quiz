@@ -39,3 +39,21 @@ startButton.addEventListener("click", function() {
     console.log("Start Button has been clicked");
 
 });
+
+// Random question selection
+
+var activeQuestion = [];
+
+function randomQuestion() {
+  // Get random array number
+     let index = Math.floor(Math.random() * questions.length);
+  // Push chosen question into external variable
+     activeQuestion = questions[index];
+  // Remove chosen question from array so that it can't show again
+     questions.splice(index, 1)
+
+     console.log(questions)
+};
+
+randomQuestion()
+console.log(activeQuestion);
