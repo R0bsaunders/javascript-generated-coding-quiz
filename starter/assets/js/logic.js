@@ -85,6 +85,7 @@ function printQuestion() {
     // Add a button per answer
     choiceButton = document.createElement('button');
     choiceButton.setAttribute("data-set", "wrong")
+    choiceButton.setAttribute("class", "answerButton")
     document.body.children[2].children[1].children[1].appendChild(choiceButton);
     choiceButton.textContent = activeQuestion[i][1];
 
