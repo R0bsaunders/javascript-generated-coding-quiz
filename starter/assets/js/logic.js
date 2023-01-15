@@ -11,11 +11,14 @@ const correctAudio = new Audio('./assets/sfx/correct.wav');
 const incorrectAudio = new Audio('./assets/sfx/incorrect.wav');
 const endScreen = document.querySelector("#end-screen");
 const finalScore = document.querySelector("#final-score");
+const userInitials = document.querySelector("#initials");
+const scoreSubmitButton = document.querySelector("#submit");
+const scoreText = document.querySelector("#score-text")
 
 
 // Declare constants
 
-const timeLeftOption = 30;
+const timeLeftOption = 120;
 const timePenalty = 10;
 
 
@@ -27,7 +30,7 @@ var feedbackText = document.createElement('p');
 feedbackText.setAttribute("class", "feedback");
 
 var endGame = false;
-
+var userScore = '';
 // Add event listener for Start button
 
 
@@ -197,11 +200,14 @@ function showEnd() {
 
   // Condition if time has run out
   if (timeLeft <= 0) {
-    finalScore.textContent = "Ran out of time";
+    scoreText.textContent = "Oh No! You ran out of time";
+    userScore = timeLeft
+
 
   // Condition if user has completed all questions before time runs out
   } else {
     finalScore.textContent = timeLeft;
+    userScore = parseInt(timeLeft);
 
   };
 
@@ -211,3 +217,28 @@ function showEnd() {
   endGame = true;
 
 };
+
+
+// Save users name and score function
+scoreSubmitButton.addEventListener("click", function(event) {
+  event.preventDefault();
+  
+  // create user object from submission
+  var user = {
+    initials: userInitials.value.trim(),
+    score: userScore
+  };
+  
+  // validate the fields
+  if (user.initials === "") {
+    alert("Error", "Initials can't be blank");
+
+  } else {
+    alert("Success", "Score saved successfully");
+
+    // Save Score
+    localStorage.setItem(user.initials, user.score);
+    endScreen.setAttribute("class", "hide");
+    introDiv.setAttribute("class", "start")
+  }
+});
