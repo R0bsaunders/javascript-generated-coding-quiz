@@ -7,6 +7,8 @@ const questionDiv = document.querySelector("#questions");
 const questionTitle = document.querySelector("#question-title");
 const choicesDiv = document.querySelector("#choices");
 const feedbackDiv = document.querySelector("#feedback");
+const correctAudio = new Audio('./assets/sfx/correct.wav');
+const incorrectAudio = new Audio('./assets/sfx/incorrect.wav');
 
 // Declare constants
 
@@ -77,6 +79,7 @@ function randomQuestion() {
 // Print first question and multiple choice answers function
 function printQuestion() {
 
+
   // Add question text to H2
   questionTitle.textContent = activeQuestion[0][1];
 
@@ -84,8 +87,8 @@ function printQuestion() {
   for (var i = 1; i < activeQuestion.length; i++) {
     // Add a button per answer
     choiceButton = document.createElement('button');
-    choiceButton.setAttribute("data-set", "wrong")
-    choiceButton.setAttribute("class", "answerButton")
+    choiceButton.setAttribute("data-set", "wrong");
+    choiceButton.setAttribute("class", "answerButton");
     document.body.children[2].children[1].children[1].appendChild(choiceButton);
     choiceButton.textContent = activeQuestion[i][1];
 
@@ -111,20 +114,56 @@ document.querySelector(".choices").addEventListener("click", function(event) {
 
     // Check data-set state for wrong or correct
     if(state === "wrong") {
-
-      document.body.children[2].children[1].children[2].appendChild(feedbackText)
+      playAudio(incorrectAudio);
+      feedback();
       feedbackText.textContent = "Wrong!"
       console.log("Wrong answer");
       randomQuestion();
-      printQuestion();
+      nextQuestion();
 
     } else {
-      feedbackText.setAttribute("class", "feedback")
-      document.body.children[2].children[1].children[2].appendChild(feedbackText)
-      feedbackText.textContent = "Correct!"
+      playAudio(correctAudio);
+      feedback();
+      feedbackText.textContent = "Correct!";
       console.log("Correct answer");
       randomQuestion();
-      printQuestion();
+      nextQuestion();
     };
   };
+
 });
+
+// Function to print any question after the first question is printed
+function nextQuestion() {
+
+  // Sets the title to the next question
+  questionTitle.textContent = activeQuestion[0][1];
+
+  // Loop to change existing button values and attributes
+  for(var i = 1; i < activeQuestion.length; i++) {
+
+    var b = document.getElementsByClassName('answerButton')
+    b[i-1].innerHTML = activeQuestion[i][1];
+    console.log(b);
+
+    // If statement updates data-attribute based on correctAnswer array being true
+    if (activeQuestion[i][0] === "correctAnswer") {
+      b[i-1].setAttribute("data-set", "correct");
+
+    } else {
+      b[i-1].setAttribute("data-set", "wrong")
+
+    };
+  };
+
+};
+
+// Function to append feedback response
+function feedback() {
+  document.body.children[2].children[1].children[2].appendChild(feedbackText)
+};
+
+// Function to play audio files
+function playAudio(x) {
+  x.play();
+};

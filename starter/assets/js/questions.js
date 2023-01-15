@@ -1,6 +1,5 @@
 const questions = [
 
-
     {
         question: "Javascript is an _______ language?",
         wrongAnswer1: "A dinosaur",
@@ -8,7 +7,6 @@ const questions = [
         wrongAnswer3: "Procedural",
         correctAnswer: "Object-Oriented"
     },
-
 
     {
         question: "Which of the following keywords is used to define a variable in Javascript?",
@@ -18,7 +16,6 @@ const questions = [
         correctAnswer: "let & var"
     },
 
-
     {
         question: "In JavaScript, what is a block of statement?",
         wrongAnswer1: "Conditional block",
@@ -26,4 +23,20 @@ const questions = [
         wrongAnswer3: "both conditional block and a single statement",
         correctAnswer: "block that combines a number of statements into a single compound statement"
     },
+
+    {
+        question: "What is a for loop?",
+        wrongAnswer1: "Four Loops",
+        wrongAnswer2: "An aerobatic manoeuver",
+        wrongAnswer3: "A stitching technique",
+        correctAnswer: "Loops can execute a block of code a number of times."
+    },
+
+    {
+        question: "What is a for loop?",
+        wrongAnswer1: "Four Loops",
+        wrongAnswer2: "An aerobatic manoeuver",
+        wrongAnswer3: "A stitching technique",
+        correctAnswer: "Loops can execute a block of code a number of times."
+    }
 ]
