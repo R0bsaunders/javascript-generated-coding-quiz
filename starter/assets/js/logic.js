@@ -12,7 +12,7 @@ const incorrectAudio = new Audio('./assets/sfx/incorrect.wav');
 
 // Declare constants
 
-const timeLeftOption = 5;
+const timeLeftOption = 120;
 const timePenalty = 5;
 
 // Declare variables
@@ -115,6 +115,7 @@ document.querySelector(".choices").addEventListener("click", function(event) {
     // Check data-set state for wrong or correct
     if(state === "wrong") {
       playAudio(incorrectAudio);
+      timeLeft -= timePenalty;
       feedback();
       feedbackText.textContent = "Wrong!"
       console.log("Wrong answer");
@@ -167,3 +168,4 @@ function feedback() {
 function playAudio(x) {
   x.play();
 };
+
