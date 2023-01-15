@@ -9,33 +9,41 @@ const choicesDiv = document.querySelector("#choices");
 const feedbackDiv = document.querySelector("#feedback");
 const correctAudio = new Audio('./assets/sfx/correct.wav');
 const incorrectAudio = new Audio('./assets/sfx/incorrect.wav');
+const endScreen = document.querySelector("#end-screen");
+const finalScore = document.querySelector("#final-score");
+
 
 // Declare constants
 
-const timeLeftOption = 120;
+const timeLeftOption = 5;
 const timePenalty = 5;
+
 
 // Declare variables
 
 var timeLeft = timeLeftOption; // Allows time to be reset to game specified number
 var activeQuestion = [];
 var feedbackText = document.createElement('p');
-feedbackText.setAttribute("class", "feedback")
+feedbackText.setAttribute("class", "feedback");
 
+var endGame = false;
 
 // Add event listener for Start button
+
 
 startButton.addEventListener("click", function() {
   console.log("Start Button has been clicked");
   introDiv.setAttribute("class", "hide")
   questionDiv.setAttribute("class", "start")
   timeLeft = timeLeftOption
-  randomQuestion();
   gameTimer();
+  randomQuestion();
+
   printQuestion();
   console.log(activeQuestion);
 
 });
+
 
 // Timer function for the game
 
@@ -43,14 +51,17 @@ function gameTimer() {
 
     var timerInterval = setInterval(function() {
         timer.textContent = timeLeft;
-        console.log(timeLeft); //debugging
   
-      if(timeLeft === 0) {
+      if(timeLeft <= 0) {
         // Stops execution of action at set interval
-        timer.textContent = "Time's Up";
+        showEnd();
         clearInterval(timerInterval);
-        timeLeft = timeLeftOption
+        timeLeft = timeLeftOption;
 
+      } else if (endGame === true) {
+        showEnd();
+        clearInterval(timerInterval);
+        timeLeft = timeLeftOption;
       };
 
       // Reduce Time By 1 Second
@@ -60,7 +71,9 @@ function gameTimer() {
 
   };
 
+
 // Random question picker function
+
 function randomQuestion() {
 
   // Get random array number
@@ -76,9 +89,10 @@ function randomQuestion() {
 
 };
 
-// Print first question and multiple choice answers function
-function printQuestion() {
 
+// Print first question and multiple choice answers function
+
+function printQuestion() {
 
   // Add question text to H2
   questionTitle.textContent = activeQuestion[0][1];
@@ -101,7 +115,9 @@ function printQuestion() {
 
 };
 
+
 // Event listener for correct or incorrect answer
+
 document.querySelector(".choices").addEventListener("click", function(event) {
   
   var element = event.target;
@@ -112,13 +128,16 @@ document.querySelector(".choices").addEventListener("click", function(event) {
     // Variable to store the data-set value
     var state = element.getAttribute("data-set");
 
-    // Check data-set state for wrong or correct
-    if(state === "wrong") {
+    if(questions.length == '') {
+      showEnd();
+
+    } else if(state === "wrong") {
+
+      // Check data-set state for wrong or correct
       playAudio(incorrectAudio);
       timeLeft -= timePenalty;
       feedback();
       feedbackText.textContent = "Wrong!"
-      console.log("Wrong answer");
       randomQuestion();
       nextQuestion();
 
@@ -126,7 +145,6 @@ document.querySelector(".choices").addEventListener("click", function(event) {
       playAudio(correctAudio);
       feedback();
       feedbackText.textContent = "Correct!";
-      console.log("Correct answer");
       randomQuestion();
       nextQuestion();
     };
@@ -134,7 +152,9 @@ document.querySelector(".choices").addEventListener("click", function(event) {
 
 });
 
+
 // Function to print any question after the first question is printed
+
 function nextQuestion() {
 
   // Sets the title to the next question
@@ -159,13 +179,35 @@ function nextQuestion() {
 
 };
 
+
 // Function to append feedback response
 function feedback() {
   document.body.children[2].children[1].children[2].appendChild(feedbackText)
 };
+
 
 // Function to play audio files
 function playAudio(x) {
   x.play();
 };
 
+
+// Function to show end-screen
+function showEnd() {
+
+  // Condition if time has run out
+  if (timeLeft <= 0) {
+    finalScore.textContent = "Ran out of time";
+
+  // Condition if user has completed all questions before time runs out
+  } else {
+    finalScore.textContent = timeLeft;
+
+  };
+
+  questionDiv.setAttribute("class", "hide");
+  endScreen.setAttribute("class", "start");
+  timer.textContent = "Game Over";
+  endGame = true;
+
+};
