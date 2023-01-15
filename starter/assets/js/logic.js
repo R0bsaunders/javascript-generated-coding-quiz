@@ -15,8 +15,8 @@ const finalScore = document.querySelector("#final-score");
 
 // Declare constants
 
-const timeLeftOption = 5;
-const timePenalty = 5;
+const timeLeftOption = 30;
+const timePenalty = 10;
 
 
 // Declare variables
@@ -85,8 +85,6 @@ function randomQuestion() {
   // Remove chosen question from array so that it can't show again
   questions.splice(index, 1);
 
-  console.log(questions);
-
 };
 
 
@@ -101,16 +99,18 @@ function printQuestion() {
   for (var i = 1; i < activeQuestion.length; i++) {
     // Add a button per answer
     choiceButton = document.createElement('button');
-    choiceButton.setAttribute("data-set", "wrong");
-    choiceButton.setAttribute("class", "answerButton");
-    document.body.children[2].children[1].children[1].appendChild(choiceButton);
-    choiceButton.textContent = activeQuestion[i][1];
 
-    // Set a dataset to identify the correct answer. Array 4 is always the correct answer
-    if(i == 4){
-      choiceButton.setAttribute("data-set", "correct")
+    if(activeQuestion[i][0] === "correctAnswer") {
+      choiceButton.setAttribute("data-set", "correct");
+
+    } else {
+      choiceButton.setAttribute("data-set", "wrong");
 
     };
+
+    choiceButton.setAttribute("class", "answerButton");
+    document.body.children[2].children[1].children[1].appendChild(choiceButton);
+    choiceButton.textContent = i + ". " + activeQuestion[i][1];
   };
 
 };
@@ -164,7 +164,7 @@ function nextQuestion() {
   for(var i = 1; i < activeQuestion.length; i++) {
 
     var b = document.getElementsByClassName('answerButton')
-    b[i-1].innerHTML = activeQuestion[i][1];
+    b[i-1].innerHTML = i + ". " + activeQuestion[i][1];
     console.log(b);
 
     // If statement updates data-attribute based on correctAnswer array being true
