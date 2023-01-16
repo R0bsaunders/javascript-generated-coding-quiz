@@ -14,7 +14,7 @@ const userInitials = document.querySelector("#initials");
 const scoreSubmitButton = document.querySelector("#submit");
 const scoreText = document.querySelector("#score-text");
 
-// Declare game mechanic constants
+// Declare game mechanic constants that can be changed easily
 const timeLeftOption = questions.length * 10;
 const timePenalty = 5;
 
