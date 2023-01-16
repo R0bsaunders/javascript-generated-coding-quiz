@@ -12,8 +12,8 @@ const questions = [
         question: "Which of the following keywords is used to define a variable in Javascript?",
         wrongAnswer1: "Google",
         wrongAnswer2: "Brainpower",
-        correctAnswer: "dictionary",
-        wrongAnswer3: "let & var"
+        wrongAnswer3: "dictionary",
+        correctAnswer: "let & var"
     },
 
     {
